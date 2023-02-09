@@ -1,0 +1,235 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import logo_header from '$lib/assets/images/neb-logo-header.svg';
+	import portal_lofi from '$lib/assets/images/portal-8bit.png';
+	import portal_token_design from '$lib/assets/images/portal-token-design.png';
+	import Particles from '$lib/components/particles.svelte';
+	import { fade } from 'svelte/transition';
+	import right_vector from '$lib/assets/images/right-vector.svg';
+	import left_vector from '$lib/assets/images/left-vector.svg';
+	import { Pie } from 'svelte-chartjs';
+
+	import {
+		Chart,
+		Title,
+		Tooltip,
+		Legend,
+		BarElement,
+		CategoryScale,
+		ArcElement,
+		LinearScale
+	} from 'chart.js';
+	import { onMount } from 'svelte';
+
+	Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+
+	let screen_width: number;
+
+	const data = {
+		labels: [
+			'Token creation w/ NEB',
+			'Liquidity & distribution events',
+			'Team, marketing, bounties'
+		],
+		datasets: [
+			{
+				data: [17810930, 106865579, 53432789],
+				backgroundColor: ['#482F6E', '#EDB85D', '#1B1B49'],
+				hoverBackgroundColor: ['#482F6E', '#EDB85D', '#1B1B49']
+			}
+		]
+	};
+</script>
+
+<div class="landing-cont">
+	<div class="content-row">
+		<div class="text-content">
+			<div class="detail-heading text-left">WELCOME TO PORTAL</div>
+			<div class="detail-subheading">The next generation of yield vaults on Lamden</div>
+			<div class="topic-title">What is Portal ?</div>
+			<div class="topic-text">
+				<p>Portal will provide the next generation of liquidity tools to the Lamden blockchain.</p>
+				<p>
+					It has been created to revive the spirit of the now derelict and abandoned project Nebula.
+				</p>
+				<p>
+					It will be powered by the $XPTL token, which will be used to pay for the fees of the
+					vaults and other offerings from the project.
+				</p>
+			</div>
+			<div class="topic-title">Who is behind Portal ?</div>
+			<div class="topic-text">
+				<p>
+					Our team is a collaboration between what remains of the original Nebula team and
+					Rocketswap, who have decided to take action to fill a void in the ecosystem which was
+					formed when Nebula was abandoned.
+				</p>
+			</div>
+		</div>
+		<div class="content-image-cont">
+			<img src={portal_lofi} alt="" />
+		</div>
+	</div>
+	<div class="content-row">
+		<div class="content-image-cont">
+			<img id="portal-token-design" src={portal_token_design} alt="" />
+		</div>
+		<div class="text-content">
+			<div class="detail-heading text-left">$XPTL</div>
+			<div class="topic-text mt-10">
+				<p>
+					$XPTL is the native token of Portal. <br /> It will be used to pay for the fees of the vaults.
+				</p>
+				<p>$XPTL will be distributed in the following ways :</p>
+				<ul>
+					<li>Burn NEB to create $PRTL</li>
+					<li>Staking $XPTL LP on Rocketswap</li>
+					<li>Airdrop to $RSWP holders, stakers and LP providers.</li>
+					<li>Allocated to those who contribute skills to the $XPTL project</li>
+				</ul>
+				<p>
+					It will be possible to burn NEB to create PORTAL for 1 month, on the 10th March 2023, the
+					token creation event will be closed permanently.
+				</p>
+				<p>
+					After this time, any undistributed $PORTAL from the mint allocation will be burned
+					permanently.
+				</p>
+				<p>We have no plans to support the NEB Key at this time.</p>
+			</div>
+		</div>
+	</div>
+	<div class="content-row">
+		<div class="text-content">
+			<div class="detail-heading text-left">TOKEN DISTRIBUTION</div>
+			<div class="topic-text mt-10 token-dist">
+				<ul>
+					<li>10% ( 17,810,930 ) - $NEB => $XPTL Token creation event.</li>
+					<li>60% ( 106,865,579 ) - Liquidity & distribution events</li>
+					<li>30% ( 53,432,789 ) - Team, marketing, bounties etc.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="content-image-cont">
+			<Pie {data} options={{ responsive: true }} />
+		</div>
+	</div>
+	<div class="content-row justify-center mb-40">
+		<!-- <div class="content-image-cont">
+			<img src={portal_lofi} alt="" />
+		</div> -->
+		<div class="text-content mt-20">
+			<div class="detail-heading text-left mb-10">What's coming next ....</div>
+			<div class="topic-title text-center">10.2.23 - 10.3.23 | Token Swap</div>
+			<div class="topic-title text-center">17.3.23 | LP Farming @ Rocketswap</div>
+			<div class="topic-title text-center">Q2 2023 | Vault Product Launch</div>
+			<div class="topic-title text-center">Detailed roadmap [Q2 2023]</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.token-dist li {
+		font-size: 1rem;
+	}
+
+	#portal-token-design {
+		width: 100%;
+		padding: 3vw 3vh;
+	}
+
+	.content-image-cont {
+		width: 40%;
+	}
+
+	.content-row {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		padding: 3vw 3vh 0vh 3vw;
+	}
+
+	.text-left {
+		text-align: left;
+	}
+
+	.topic-text {
+		font-size: 0.9rem;
+		font-weight: 400;
+		letter-spacing: 0.2rem;
+		margin-bottom: 3rem;
+	}
+
+	.topic-text > p,
+	ul {
+		margin-bottom: 1rem;
+	}
+
+	.topic-title {
+		font-size: 1rem;
+		font-weight: 500;
+		margin-bottom: 1.3rem;
+		letter-spacing: 0.4rem;
+		text-decoration: underline;
+	}
+
+	.detail-heading {
+		font-size: 2.5rem;
+		font-weight: 400;
+		letter-spacing: 0.7rem;
+	}
+
+	.text-content {
+		width: 60%;
+	}
+
+	.detail-subheading {
+		font-size: 0.8rem;
+		font-weight: 400;
+		letter-spacing: 0.4rem;
+		margin-bottom: 3rem;
+	}
+
+	.landing-cont {
+		margin: 5vh auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: #c6b594;
+		z-index: 1;
+		background-color: rgba(31, 23, 34, 0.9);
+		/* height: 100vh; */
+		max-width: 1200px;
+	}
+
+	ul > li:before {
+		content: '•';
+		color: #c6b594;
+		display: inline-block;
+		width: 1em;
+		margin-left: 1em;
+		
+	}
+
+	ul > li {
+		margin-bottom: 1rem;
+	}
+
+	@media (min-width: 1200px) {
+	}
+
+	@media (max-width: 800px) {
+		.content-row {
+			flex-direction: column;
+		}
+
+		.content-image-cont {
+			margin: 0 auto;
+			width: 80%;
+		}
+
+		.text-content {
+			width: 100%;
+		}
+	}
+</style>

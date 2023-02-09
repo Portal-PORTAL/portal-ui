@@ -11,10 +11,10 @@
 	export let distance = 150;
 	export let particles_number: [number, number] = [50, 120];
 
-	onMount(async () => {
-		const module = await import('svelte-particles');
-		ParticlesComponent = module.default;
-	});
+	// onMount(async () => {
+	// 	const module = await import('svelte-particles');
+	// 	ParticlesComponent = module.default;
+	// });
 
 	let particlesConfig = {
 		particles: {
@@ -52,7 +52,7 @@
 
 	let onParticlesLoaded = (event) => {
 		const particlesContainer = event.detail.particles;
-
+		console.log(particlesContainer)
 		// you can use particlesContainer to call all the Container class
 		// (from the core library) methods like play, pause, refresh, start, stop
 	};
@@ -64,7 +64,7 @@
 		await loadFull(engine);
 	};
 </script>
-
+<div>
 	<svelte:component
 		this={ParticlesComponent}
 		id="tsparticles"
@@ -72,6 +72,7 @@
 		on:particlesLoaded={onParticlesLoaded}
 		{particlesInit}
 	/>
+</div>
 
 <style>
 </style>

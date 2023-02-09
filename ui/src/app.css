@@ -6,8 +6,65 @@
 	/* @apply rounded-full; */
 }
 
-.btn-nebula {
-    background-color: #751B59;
-    outline: none;
-    border: none;
+
+button {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+.btn-primary {
+    background-color: #ecb75c !important;
+    outline: 1px solid #f6cd62 !important;
+    color: #29183f !important;
+}
+
+.btn-primary:active {
+    outline: 3px solid #f6cd62 !important;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem !important;
+    max-width: 300px;
+    /* font-size: 1rem !important; */
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+}
+
+.btn-outline {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.btn-rounded {
+    border-radius: 30px !important;
+}
+
+.button {
+    user-select: none;
+    background-color: #751b59;
+    outline: 3px solid #a6277e;
+    color: #fff;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: poppins;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+}
+
+.button:hover {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.button:active {
+    background-color: #751b59;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: 3px solid #a6277e;
 }
