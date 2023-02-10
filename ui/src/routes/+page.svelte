@@ -8,19 +8,25 @@
 	import Details from '../lib/components/details.svelte';
 
 	let screen_width: number;
+
+	function scrollIntoView() {
+		const el = document.querySelector(('#main'));
+		if (!el) return;
+		el.scrollIntoView({
+			behavior: 'smooth'
+		});
+	}
 </script>
 
-		<!-- <div class="landing-cont"> -->
-			<Landing/>
-			<Details/>
-		<!-- </div> -->
-
+<!-- <div class="landing-cont"> -->
+<Landing scrollHandler={scrollIntoView} />
+<section id="main" />
+<Details />
+<!-- </div> -->
 
 <svelte:window bind:innerWidth={screen_width} />
 
 <style>
-
-
 	.landing-cont {
 		display: flex;
 		flex-direction: column;

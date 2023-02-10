@@ -2,6 +2,8 @@
 	import landing_image from '$lib/assets/images/portal-landing-no-bg.png';
 	import portal_landing_text from '$lib/assets/images/portal-landing-text.svg';
 
+	export let scrollHandler: Function
+
 	$: bgImage = `background-image: url("${landing_image}");`;
 </script>
 
@@ -13,7 +15,7 @@
 		<div class="landing-text"><img src={portal_landing_text} alt="" /></div>
 	</div>
 	<div class="btn-container">
-		<button class="button btn-primary btn-rounded">explore the portal</button>
+		<button on:click={scrollHandler} class="button btn-primary btn-rounded">explore the portal</button>
 	</div>
 </div>
 <div class="landing-container">
