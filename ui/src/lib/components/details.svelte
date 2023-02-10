@@ -87,7 +87,7 @@
 				</ul>
 				<p>$XPTL will be distributed in the following ways :</p>
 				<ul>
-					<li>Burn NEB to create $PRTL</li>
+					<li>Burn NEB to create $XPTL</li>
 					<li>Staking $XPTL LP on Rocketswap</li>
 					<li>Airdrop to $RSWP holders, stakers and LP providers.</li>
 					<li>Allocated to those who contribute skills to the $XPTL project</li>
