@@ -1,7 +1,7 @@
 module.exports = {
 	apps: [
 		{
-			name: "neb-ui",
+			name: "portal-ui",
 			script: "cd ui && npm run dev",
 		},
 	]
