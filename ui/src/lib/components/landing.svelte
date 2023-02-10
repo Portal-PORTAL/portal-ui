@@ -2,7 +2,7 @@
 	import landing_image from '$lib/assets/images/portal-landing-no-bg.png';
 	import portal_landing_text from '$lib/assets/images/portal-landing-text.svg';
 
-	export let scrollHandler: Function
+	export let scrollHandler: any
 
 	$: bgImage = `background-image: url("${landing_image}");`;
 </script>

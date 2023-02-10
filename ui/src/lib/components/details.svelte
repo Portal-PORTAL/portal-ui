@@ -78,8 +78,13 @@
 			<div class="detail-heading text-left">$XPTL</div>
 			<div class="topic-text mt-10">
 				<p>
-					$XPTL is the native token of Portal. <br /> It will be used to pay for the fees of the vaults.
+					$XPTL is the native token of Portal. <br />
+					Initial uses for $XPTL will be :
 				</p>
+				<ul>
+					<li>Pay for the fees of the vaults.</li>
+					<li>Increase reward levels on vaults via staking.</li>
+				</ul>
 				<p>$XPTL will be distributed in the following ways :</p>
 				<ul>
 					<li>Burn NEB to create $PRTL</li>
@@ -92,7 +97,7 @@
 					token creation event will be closed permanently.
 				</p>
 				<p>
-					After this time, any undistributed $PORTAL from the mint allocation will be burned
+					After this time, any undistributed $XPTL from the mint allocation will be burned
 					permanently.
 				</p>
 				<p>We have no plans to support the NEB Key at this time.</p>
@@ -104,22 +109,22 @@
 			<div class="detail-heading text-left">TOKEN DISTRIBUTION</div>
 			<div class="topic-text mt-10 token-dist">
 				<ul>
-					<li>10% ( 17,810,930 ) - $NEB => $XPTL Token creation event.</li>
-					<li>60% ( 106,865,579 ) - Liquidity & distribution events</li>
-					<li>30% ( 53,432,789 ) - Team, marketing, bounties etc.</li>
+					<li>10% ( 17,810,930 ) - $NEB => $XPTL token mint event.</li>
+					<li>60% ( 106,865,579 ) - Liquidity & distribution initiatives.</li>
+					<li>30% ( 53,432,789 ) - Team, marketing & bounties.</li>
 				</ul>
 			</div>
 		</div>
 		<div class="content-image-cont">
-			<Pie {data} options={{ responsive: true }} />
+			<Pie {data} options={{ responsive: true, plugins: { legend: { display: false } } }} />
 		</div>
 	</div>
 	<div class="content-row justify-center mb-40">
 		<!-- <div class="content-image-cont">
 			<img src={portal_lofi} alt="" />
 		</div> -->
-		<div class="text-content mt-20">
-			<div class="detail-heading text-left mb-10">What's coming next ....</div>
+		<div class="text-content mt-20 w-60">
+			<div class="detail-heading text-center mb-10">What's coming next : </div>
 			<div class="topic-title text-center">10.2.23 - 10.3.23 | Token Swap</div>
 			<div class="topic-title text-center">17.3.23 | LP Farming @ Rocketswap</div>
 			<div class="topic-title text-center">Q2 2023 | Vault Product Launch</div>
@@ -208,7 +213,6 @@
 		display: inline-block;
 		width: 1em;
 		margin-left: 1em;
-		
 	}
 
 	ul > li {
