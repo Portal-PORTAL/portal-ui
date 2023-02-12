@@ -9,6 +9,10 @@
 	import left_vector from '$lib/assets/images/left-vector.svg';
 	import { Pie } from 'svelte-chartjs';
 
+	/**
+	 *
+	 */
+
 	import {
 		Chart,
 		Title,
@@ -20,6 +24,7 @@
 		LinearScale
 	} from 'chart.js';
 	import { onMount } from 'svelte';
+	import ConvertPanel from './convert-panel.svelte';
 
 	Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
@@ -27,7 +32,7 @@
 
 	const data = {
 		labels: [
-			'Token creation w/ NEB',
+			'Token creation w/ $NEB',
 			'Liquidity & distribution events',
 			'Team, marketing, bounties'
 		],
@@ -42,6 +47,7 @@
 </script>
 
 <div class="landing-cont">
+	<section id="about" />
 	<div class="content-row">
 		<div class="text-content">
 			<div class="detail-heading text-left">WELCOME TO PORTAL</div>
@@ -70,6 +76,7 @@
 			<img src={portal_lofi} alt="" />
 		</div>
 	</div>
+	<section id="xptl" />
 	<div class="content-row">
 		<div class="content-image-cont">
 			<img id="portal-token-design" src={portal_token_design} alt="" />
@@ -87,20 +94,19 @@
 				</ul>
 				<p>$XPTL will be distributed in the following ways :</p>
 				<ul>
-					<li>Burn NEB to create $XPTL</li>
-					<li>Staking $XPTL LP on Rocketswap</li>
+					<li>Burn $NEB to create $XPTL</li>
+					<li>Staking $XPTL LP on <a href="https://rocketswap.exchange">Rocketswap</a></li>
 					<li>Airdrop to $RSWP holders, stakers and LP providers.</li>
 					<li>Allocated to those who contribute skills to the $XPTL project</li>
 				</ul>
 				<p>
-					It will be possible to burn NEB to create PORTAL for 1 month, on the 10th March 2023, the
-					token creation event will be closed permanently.
-				</p>
-				<p>
-					After this time, any undistributed $XPTL from the mint allocation will be burned
+					It will be possible to burn <a
+						href="https://rocketswap.exchange/#/swap/con_nebula"
+						target="_blank">$NEB</a
+					> to create PORTAL for 1 month, on the 10th March 2023, the token creation event will be closed
 					permanently.
 				</p>
-				<p>We have no plans to support the NEB Key at this time.</p>
+				<p>We have no plans to support the $NEB Key at this time.</p>
 			</div>
 		</div>
 	</div>
@@ -115,16 +121,20 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content-image-cont">
+		<div class="content-image-cont h-60 text-center flex justify-center">
 			<Pie {data} options={{ responsive: true, plugins: { legend: { display: false } } }} />
 		</div>
 	</div>
+	<section id="mint" />
+	<div class="detail-heading text-center mt-20">Mint $XPTL with $NEB</div>
+	<div class="content-row">
+		<ConvertPanel />
+	</div>
+	<section id="roadmap" />
+
 	<div class="content-row justify-center mb-40">
-		<!-- <div class="content-image-cont">
-			<img src={portal_lofi} alt="" />
-		</div> -->
-		<div class="text-content mt-20 w-60">
-			<div class="detail-heading text-center mb-10">What's coming next : </div>
+		<div class="text-content mt-10 w-60">
+			<div class="detail-heading text-center mb-10">What's coming next :</div>
 			<div class="topic-title text-center">10.2.23 - 10.3.23 | Token Swap</div>
 			<div class="topic-title text-center">17.3.23 | LP Farming @ Rocketswap</div>
 			<div class="topic-title text-center">Q2 2023 | Vault Product Launch</div>
@@ -205,6 +215,11 @@
 		background-color: rgba(31, 23, 34, 0.9);
 		/* height: 100vh; */
 		max-width: 1200px;
+	}
+
+	a {
+		/* color: #c6b594; */
+		text-decoration: underline;
 	}
 
 	ul > li:before {

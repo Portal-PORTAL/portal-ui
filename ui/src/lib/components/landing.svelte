@@ -2,7 +2,7 @@
 	import landing_image from '$lib/assets/images/portal-landing-no-bg.png';
 	import portal_landing_text from '$lib/assets/images/portal-landing-text.svg';
 
-	export let scrollHandler: any
+	export let scrollHandler: any;
 
 	$: bgImage = `background-image: url("${landing_image}");`;
 </script>
@@ -15,11 +15,12 @@
 		<div class="landing-text"><img src={portal_landing_text} alt="" /></div>
 	</div>
 	<div class="btn-container">
-		<button on:click={scrollHandler} class="button btn-primary btn-rounded">explore the portal</button>
+		<button on:click={() => scrollHandler('#about')} class="button btn-primary btn-rounded"
+			>explore the portal</button
+		>
 	</div>
 </div>
-<div class="landing-container">
-</div>
+<div class="landing-container" />
 
 <style>
 	.landing-img-cont-outer {
@@ -28,9 +29,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		/* background-color: rgba(31, 23, 34, 0.9); */
 		position: absolute;
-		/* mix-blend-mode: screen; */
 	}
 	.landing-container {
 		height: 100vh;
@@ -38,10 +37,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: rgba(31, 23, 34, 0.9);
+		background-color: rgba(31, 23, 34, 0.6);
 		width: 100%;
 		margin: 0 auto;
-		mix-blend-mode: lighten;
 	}
 
 	.landing-img-container {
@@ -59,7 +57,7 @@
 
 	.landing-text {
 		text-align: center;
-		mix-blend-mode: exclusion;
+		/* mix-blend-mode: exclusion; */
 		padding: 0 10vh;
 		color: #ffffff;
 		padding-top: 20vh;
