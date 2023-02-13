@@ -179,7 +179,6 @@
 			type: 'info'
 		});
 		lwc.sendTransaction(approve_tx, async (res) => {
-			approving = false;
 			if (res.status === 'error')
 				ToastService.getInstance().addToast({
 					heading: 'Approval transcation failed :(',
@@ -199,6 +198,7 @@
 					}
 				});
 			approved_amount = await getApprovalBalance(vk);
+			approving = false;
 		});
 	}
 
@@ -236,8 +236,8 @@
 						href: createBlockExplorerLink('transactions', res.data.txHash)
 					}
 				});
-			converting = false;
-			approved_amount = await getApprovalBalance(vk);
+				approved_amount = await getApprovalBalance(vk);
+				converting = false;
 		});
 	}
 </script>
