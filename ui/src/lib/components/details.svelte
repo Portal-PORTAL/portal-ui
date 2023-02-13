@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import logo_header from '$lib/assets/images/neb-logo-header.svg';
 	import portal_lofi from '$lib/assets/images/portal-8bit.png';
 	import portal_token_design from '$lib/assets/images/portal-token-design.png';

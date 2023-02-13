@@ -8,7 +8,6 @@
 	import WalletController from 'lamden_wallet_controller';
 	import { connection_requst } from '$lib/ts/wallet.config';
 	import axios from 'axios';
-	import { goto } from '$app/navigation';
 	import { createBlockExplorerLink, getNumberValue } from '../ts/utils';
 	import { ToastService } from '../services/toast.service';
 
