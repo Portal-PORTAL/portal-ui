@@ -5,6 +5,18 @@
 	import logo_discord from '$lib/assets/images/social-logos/logo-discord.svg';
 	import logo_telegram from '$lib/assets/images/social-logos/logo-telegram.svg';
 	import logo_medium from '$lib/assets/images/social-logos/logo-medium.svg';
+	import ToastsContainer from '$lib/components/toasts-container.svelte';
+	import { ToastService } from '$lib/services/toast.service';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+
+	let toast_service: ToastService;
+
+	onMount(() => {
+		if (browser) {
+			toast_service = ToastService.getInstance();
+		}
+	});
 
 	function scrollIntoView({ target }) {
 		const el = document.querySelector(target.getAttribute('href'));
@@ -16,6 +28,7 @@
 </script>
 
 <!-- <header class="sticky-header" /> -->
+<ToastsContainer/>
 
 <footer class="sticky-footer">
 	<div class="footer-container">
@@ -51,7 +64,6 @@
 	</div>
 </footer>
 <slot />
-
 <style>
 	.sticky-header {
 		position: fixed;
@@ -85,10 +97,6 @@
 		text-transform: uppercase;
 		width: 70%;
 		max-width: 900px;
-	}
-
-	.footer-nav a {
-		/* padding-right: 4rem; */
 	}
 
 	.socials {

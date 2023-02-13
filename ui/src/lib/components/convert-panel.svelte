@@ -7,6 +7,10 @@
 	import { browser } from '$app/environment';
 	import WalletController from 'lamden_wallet_controller';
 	import { connection_requst } from '$lib/ts/wallet.config';
+	import axios from 'axios';
+	import { goto } from '$app/navigation';
+	import { createBlockExplorerLink, getNumberValue } from '../ts/utils';
+	import { ToastService } from '../services/toast.service';
 
 	let lwc: WalletController;
 	let check_wallet_installed_interval: NodeJS.Timer;
@@ -15,14 +19,16 @@
 	let wallet_connected = false;
 	let wallet_locked = true;
 	let approved_amount = 0;
+	$: approved_amount;
 	let connection;
-	let converting = false
+	let converting = false;
+	let approving = false;
 
 	// wallet info
 	let vk = '';
 	let neb_balance: number;
 	let xptl_balance: number;
-	let neb_burn_value: number = 0;
+	let neb_burn_value: number;
 	// let xptl_receive_value: number;
 	$: xptl_receive_value = parseBalanceValue(String((neb_burn_value || 0) / 10));
 
@@ -35,19 +41,14 @@
 
 	async function getApprovalBalance(vk: string) {
 		try {
-			const url = `https://rocketswap.exchange/api/proxy_req?action_name=get_balance_value&args=con_nebula&args=${vk}:con_portal`;
-			const res = await fetch(url, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-					// 'access-control-allow-origin': '*'
-				}
-			});
-			const data = await res.json();
-			console.log({ data });
-			return data;
+			const res = await axios.get(
+				`https://rocketswap.exchange/api/proxy_req?action_name=get_balance_value&args=con_nebula&args=${vk}:con_portal`
+			);
+			if (!res.data) return 0;
+			return getNumberValue(res.data);
 		} catch (err) {
 			console.log({ err });
+			return 0;
 		}
 	}
 
@@ -171,13 +172,38 @@
 			methodName: 'approve',
 			contractName: 'con_nebula',
 			kwargs: {
-				amount: { __fixed__: neb_burn_value - approved_amount }
-			},
-			callback: (res) => {
-				console.log({ res });
+				to: 'con_portal',
+				amount: { __fixed__: String(neb_burn_value - approved_amount) }
 			}
 		};
-		lwc.sendTransaction(approve_tx);
+		approving = true;
+		ToastService.getInstance().addToast({
+			heading: 'Approval transaction sent.',
+			type: 'info'
+		});
+			lwc.sendTransaction(approve_tx, async (res) => {
+				approving = false;
+				if (res.status === 'error')
+					ToastService.getInstance().addToast({
+						heading: 'Approval transcation failed :(',
+						type: 'error',
+						link: {
+							text: 'View on TAUHQ',
+							href: createBlockExplorerLink('transactions', res.data.txHash)
+						}
+					});
+				if (res.status === 'success')
+					ToastService.getInstance().addToast({
+						heading: 'Approval transcation successful !',
+						type: 'success',
+						link: {
+							text: 'View on TAUHQ',
+							href: createBlockExplorerLink('transactions', res.data.txHash)
+						}
+					});
+				console.log({ res });
+				approved_amount = await getApprovalBalance(vk);
+			});
 	}
 
 	function handleBurnClicked() {
@@ -189,9 +215,33 @@
 				amount: { __fixed__: neb_burn_value }
 			}
 		};
-		converting = true
-		lwc.sendTransaction(burn_tx, (res) => {
-			converting = false
+
+		converting = true;
+		lwc.sendTransaction(burn_tx, async (res) => {
+			if (res.status === 'error')
+				ToastService.getInstance().addToast({
+					heading: 'Mint transcation failed :(',
+					link: {
+						text: 'View on TAUHQ',
+						href: createBlockExplorerLink('transactions', res.data.txHash),
+						link: {
+							text: 'View on TAUHQ',
+							href: createBlockExplorerLink('transactions', res.data.txHash)
+						}
+					},
+					type: 'error'
+				});
+			if (res.status === 'success')
+				ToastService.getInstance().addToast({
+					heading: 'Mint transcation successful !',
+					type: 'success',
+					link: {
+						text: 'View on TAUHQ',
+						href: createBlockExplorerLink('transactions', res.data.txHash)
+					}
+				});
+			converting = false;
+			approved_amount = await getApprovalBalance(vk);
 			console.log({ res });
 		});
 	}
@@ -201,7 +251,7 @@
 	<div class="action-heading">Burn</div>
 	<div class="balance">
 		{#if wallet_connected && !wallet_locked}
-			<span> balance : {neb_balance} </span>
+			<span><a on:click|preventDefault={burnMax} href="#mint">balance : {neb_balance}</a></span>
 		{/if}
 	</div>
 	<div class="input-cont">
@@ -216,13 +266,13 @@
 			<div class="input-container">
 				<input bind:value={neb_burn_value} type="text" placeholder="0" />
 			</div>
-			<div class="max-btn-cont">
+			<!-- <div class="max-btn-cont">
 				{#if wallet_connected && !wallet_locked}
 					<button on:click={burnMax} class="btn-small btn-rounded button btn-secondary ml-5"
 						>max</button
 					>
 				{/if}
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class="action-heading mt-10">Receive</div>
@@ -248,19 +298,21 @@
 					placeholder="0.00"
 				/>
 			</div>
-			<div class="max-btn-cont" />
+			<!-- <div class="max-btn-cont" /> -->
 		</div>
 	</div>
 	<div class="button-cont">
 		{#if !wallet_installed}
-			<button class="button btn-primary btn-rounded btn-wide btn-outline">install wallet</button>
+			<button disabled class="button btn-primary btn-rounded btn-wide btn-outline"
+				>install wallet</button
+			>
 			<div class="explanation">
-				You must install the
+				Please install the
 				<a
 					href="https://chrome.google.com/webstore/detail/lamden-vault-browser-exte/fhfffofbcgbjjojdnpcfompojdjjhdim"
 					target="_blank"
 					rel="noreferrer">Lamden Vault</a
-				> to use this feature.
+				> to use this panel.
 			</div>
 			<!-- <button class="button btn-primary btn-rounded btn-wide btn-large">Convert</button> -->
 		{:else if !wallet_connected}
@@ -272,18 +324,23 @@
 		{:else if wallet_locked}
 			<button class="button btn-primary btn-rounded btn-wide btn-outline ">Wallet Locked</button>
 			<div class="explanation">Unlock your wallet</div>
-		{:else if neb_burn_value > approved_amount || approved_amount === 0}
+		{:else if neb_burn_value > approved_amount || (approved_amount === 0 && neb_burn_value > 0)}
 			<!-- <button class="button btn-primary btn-rounded btn-wide btn-outline ">Approve</button> -->
 			<button
-				disabled={neb_burn_value === 0}
-				class="button btn-secondary btn-rounded btn-wide btn-outline ">Approve</button
+				on:click={handleApproveClicked}
+				disabled={neb_burn_value === 0 || approving}
+				class="button btn-secondary btn-rounded btn-wide btn-outline"
+				>{approving ? 'Approving' : 'Approve'}</button
 			>
 			<div class="explanation">
-				Approve {neb_burn_value - approved_amount} $NEB
+				Please approve {neb_burn_value - approved_amount} $NEB to be spent by the portal.
 			</div>
 		{:else}
-			<button disabled={converting} on:click={handleBurnClicked} class="button btn-secondary btn-rounded btn-wide"
-				>{converting ? 'converting ... ' : "convert"}</button
+			<button
+				disabled={converting || !neb_burn_value}
+				on:click={handleBurnClicked}
+				class="button btn-secondary btn-rounded btn-wide"
+				>{converting ? 'converting ... ' : 'convert'}</button
 			>
 			<div class="explanation">Burn $NEB and receive $XPTL</div>
 		{/if}
@@ -317,12 +374,16 @@
 	}
 
 	.balance {
-		padding-right: 120px;
+		/* padding-right: 120px; */
 		display: flex;
 		flex-direction: row-reverse;
 		width: 100%;
+		margin-bottom: 10px;
 		letter-spacing: 0.3rem;
 		min-height: 1.5vh;
+	}
+	.balance a {
+		text-decoration: underline !important;
 	}
 	.input-container {
 		margin-left: 1rem;
