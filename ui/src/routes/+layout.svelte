@@ -65,18 +65,6 @@
 </footer>
 <slot />
 <style>
-	.sticky-header {
-		position: fixed;
-		top: 0;
-		left: 0;
-		/* width: 100%; */
-		z-index: 100;
-		/* background-color: #19131C; */
-		height: 80px;
-		/* border-bottom: 2px solid #ecb75c; */
-		display: flex;
-		flex-direction: row-reverse;
-	}
 
 	.social-logo-cont {
 		width: 30px;

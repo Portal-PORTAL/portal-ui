@@ -7,6 +7,9 @@
 	import right_vector from '$lib/assets/images/right-vector.svg';
 	import left_vector from '$lib/assets/images/left-vector.svg';
 	import { Pie } from 'svelte-chartjs';
+	import logo_discord from '$lib/assets/images/social-logos/logo-discord.svg';
+	import logo_telegram from '$lib/assets/images/social-logos/logo-telegram.svg';
+	import logo_medium from '$lib/assets/images/social-logos/logo-medium.svg';
 
 	/**
 	 *
@@ -131,7 +134,7 @@
 	</div>
 	<section id="roadmap" />
 
-	<div class="content-row justify-center mb-40">
+	<div class="content-row justify-center mb-20">
 		<div class="text-content mt-10 w-60">
 			<div class="detail-heading text-center mb-10">What's coming next :</div>
 			<div class="topic-title text-center">10.2.23 - 10.3.23 | Token Swap</div>
@@ -140,9 +143,61 @@
 			<div class="topic-title text-center">Detailed roadmap [Q2 2023]</div>
 		</div>
 	</div>
+	<section id="contact" />
+
+	<div class="content-row justify-center mb-20">
+		<div class="text-content mt-10 w-60">
+			<div class="socials-heading text-center mb-10">Connect with us on our socials :</div>
+			<div class="socials">
+				<!-- <div class="social-logo-cont">
+				<a href="https://discord.gg/EcdbaNcmdG" rel="noreferrer" target="_blank">
+					<img src={logo_discord} alt="discord" />
+				</a>
+			</div> -->
+				<div class="social-logo-cont">
+					<a href="https://t.me/LamdenPortal" rel="noreferrer" target="_blank">
+						<img src={logo_telegram} alt="telegram" />
+					</a>
+				</div>
+				<!-- <div class="social-logo-cont">
+				<a href="" rel="noreferrer" target="_blank">
+					<img src={logo_medium} alt="medium" />
+				</a>
+			</div> -->
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
+	.socials-heading {
+		font-size: 1.7rem;
+	}
+
+	.socials {
+		display: flex;
+
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid #c6b594;
+		border-radius: 10px;
+		width: 50%;
+		margin: 0 auto;
+
+		/* padding: 2rem; */
+		/* min-width: 200px; */
+	}
+
+	.social-logo-cont {
+		width: 4rem;
+		height: 4rem;
+		margin: 0 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	.token-dist li {
 		font-size: 1rem;
 	}
