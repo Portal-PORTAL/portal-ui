@@ -145,7 +145,7 @@
 	</div>
 	<section id="contact" />
 
-	<div class="content-row justify-center mb-20">
+	<div class="content-row justify-center mb-40">
 		<div class="text-content mt-10 w-60">
 			<div class="socials-heading text-center mb-10">Connect with us on our socials :</div>
 			<div class="socials">
