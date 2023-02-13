@@ -92,7 +92,6 @@
 
 	async function handleWalletVk(vk: string) {
 		console.log('handleWalletVk', vk);
-		console.log(connection.connected);
 		connection.emit('join_room', `balance_feed:${vk}`);
 		// joinRoom(`balance_feed:${vk}`);
 
@@ -124,7 +123,6 @@
 	}
 
 	function handleConnectClicked() {
-		console.log('handleConnectClicked');
 		lwc.sendConnection(connection_requst);
 	}
 
@@ -201,7 +199,6 @@
 							href: createBlockExplorerLink('transactions', res.data.txHash)
 						}
 					});
-				console.log({ res });
 				approved_amount = await getApprovalBalance(vk);
 			});
 	}
@@ -242,7 +239,6 @@
 				});
 			converting = false;
 			approved_amount = await getApprovalBalance(vk);
-			console.log({ res });
 		});
 	}
 </script>
