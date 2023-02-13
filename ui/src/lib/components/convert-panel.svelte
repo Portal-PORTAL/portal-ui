@@ -202,6 +202,10 @@
 		});
 	}
 
+	function resetBurnAmount() {
+		neb_burn_value = 0;
+	}
+
 	function handleBurnClicked() {
 		const burn_tx = {
 			...base_tx,
@@ -237,6 +241,7 @@
 					}
 				});
 				approved_amount = await getApprovalBalance(vk);
+				resetBurnAmount()
 				converting = false;
 		});
 	}

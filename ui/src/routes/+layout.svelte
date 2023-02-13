@@ -138,19 +138,8 @@
 	}
 
 	@media (max-width: 768px) {
-		.footer-nav {
+		.sticky-footer {
 			display: none;
-		}
-		.footer-logo {
-			width: 100%;
-		}
-		#logo-img {
-			min-width: 60px;
-			height: 60px;
-		}
-		#logo-text {
-			width: 100px;
-			height: 30px;
 		}
 	}
 </style>
