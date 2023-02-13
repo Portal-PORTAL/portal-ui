@@ -178,28 +178,28 @@
 			heading: 'Approval transaction sent.',
 			type: 'info'
 		});
-			lwc.sendTransaction(approve_tx, async (res) => {
-				approving = false;
-				if (res.status === 'error')
-					ToastService.getInstance().addToast({
-						heading: 'Approval transcation failed :(',
-						type: 'error',
-						link: {
-							text: 'View on TAUHQ',
-							href: createBlockExplorerLink('transactions', res.data.txHash)
-						}
-					});
-				if (res.status === 'success')
-					ToastService.getInstance().addToast({
-						heading: 'Approval transcation successful !',
-						type: 'success',
-						link: {
-							text: 'View on TAUHQ',
-							href: createBlockExplorerLink('transactions', res.data.txHash)
-						}
-					});
-				approved_amount = await getApprovalBalance(vk);
-			});
+		lwc.sendTransaction(approve_tx, async (res) => {
+			approving = false;
+			if (res.status === 'error')
+				ToastService.getInstance().addToast({
+					heading: 'Approval transcation failed :(',
+					type: 'error',
+					link: {
+						text: 'View on TAUHQ',
+						href: createBlockExplorerLink('transactions', res.data.txHash)
+					}
+				});
+			if (res.status === 'success')
+				ToastService.getInstance().addToast({
+					heading: `Successfully approved ${neb_burn_value - approved_amount} NEB.`,
+					type: 'success',
+					link: {
+						text: 'View on TAUHQ',
+						href: createBlockExplorerLink('transactions', res.data.txHash)
+					}
+				});
+			approved_amount = await getApprovalBalance(vk);
+		});
 	}
 
 	function handleBurnClicked() {
@@ -229,7 +229,7 @@
 				});
 			if (res.status === 'success')
 				ToastService.getInstance().addToast({
-					heading: 'Mint transcation successful !',
+					heading: `Successfully converted ${neb_burn_value} $NEB to ${neb_burn_value / 10} $XPTL !`,
 					type: 'success',
 					link: {
 						text: 'View on TAUHQ',
