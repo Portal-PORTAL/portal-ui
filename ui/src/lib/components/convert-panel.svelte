@@ -212,7 +212,7 @@
 			methodName: 'swap_neb',
 			contractName: 'con_portal',
 			kwargs: {
-				amount: { __fixed__: neb_burn_value }
+				amount: { __fixed__: String(Number(neb_burn_value)) }
 			}
 		};
 
