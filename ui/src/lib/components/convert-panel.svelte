@@ -105,7 +105,7 @@
 		connection.on(`balance_list:${vk}`, (balance_list) => {
 			console.log({ balance_list });
 			const { balances } = balance_list;
-			neb_balance = parseBalanceValue(balances['con_nebula']);
+			neb_balance = Math.floor(parseBalanceValue(balances['con_nebula']));
 			xptl_balance = parseBalanceValue(balances['con_portal']);
 		});
 
@@ -170,7 +170,7 @@
 			contractName: 'con_nebula',
 			kwargs: {
 				to: 'con_portal',
-				amount: { __fixed__: String(neb_burn_value - approved_amount) }
+				amount: { __fixed__: String(Math.ceil(neb_burn_value - approved_amount)) }
 			}
 		};
 		approving = true;
@@ -212,7 +212,7 @@
 			methodName: 'swap_neb',
 			contractName: 'con_portal',
 			kwargs: {
-				amount: { __fixed__: String(Number(neb_burn_value)) }
+				amount: { __fixed__: String(Math.floor(Number(neb_burn_value))) }
 			}
 		};
 
@@ -233,16 +233,18 @@
 				});
 			if (res.status === 'success')
 				ToastService.getInstance().addToast({
-					heading: `Successfully converted ${neb_burn_value} $NEB to ${neb_burn_value / 10} $XPTL !`,
+					heading: `Successfully converted ${neb_burn_value} $NEB to ${
+						neb_burn_value / 10
+					} $XPTL !`,
 					type: 'success',
 					link: {
 						text: 'View on TAUHQ',
 						href: createBlockExplorerLink('transactions', res.data.txHash)
 					}
 				});
-				approved_amount = await getApprovalBalance(vk);
-				resetBurnAmount()
-				converting = false;
+			approved_amount = await getApprovalBalance(vk);
+			resetBurnAmount();
+			converting = false;
 		});
 	}
 </script>
@@ -264,7 +266,7 @@
 				<div class="token-symbol">$NEB</div>
 			</div>
 			<div class="input-container">
-				<input bind:value={neb_burn_value} type="text" placeholder="0" />
+				<input type="number" bind:value={neb_burn_value} placeholder="0" />
 			</div>
 			<!-- <div class="max-btn-cont">
 				{#if wallet_connected && !wallet_locked}
@@ -294,7 +296,7 @@
 				<input
 					style="pointer-events:none; user-select:none;"
 					bind:value={xptl_receive_value}
-					type="text"
+					type="number"
 					placeholder="0.00"
 				/>
 			</div>
@@ -417,6 +419,17 @@
 
 	input::placeholder {
 		color: #c6b594;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type='number'] {
+		-moz-appearance: textfield;
 	}
 
 	.token-name {
